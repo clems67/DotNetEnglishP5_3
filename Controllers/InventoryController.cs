@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnglishP5_3.Data;
+using DotNetEnglishP5_3.Models;
 
-namespace DotNetEnglishP5_3.Models
+namespace DotNetEnglishP5_3.Controllers
 {
     public class InventoryController : Controller
     {
@@ -21,7 +22,7 @@ namespace DotNetEnglishP5_3.Models
         // GET: Inventory
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Inventory.ToListAsync());
+            return View(await _context.Inventory.ToListAsync());
         }
 
         // GET: Inventory/Details/5
@@ -147,14 +148,14 @@ namespace DotNetEnglishP5_3.Models
             {
                 _context.Inventory.Remove(inventory);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool InventoryExists(int id)
         {
-          return _context.Inventory.Any(e => e.Id == id);
+            return _context.Inventory.Any(e => e.Id == id);
         }
     }
 }
