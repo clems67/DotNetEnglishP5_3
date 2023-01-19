@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using DotNetEnglishP5_3.Models;
 
 namespace DotNetEnglishP5_3.Data
 {
@@ -9,5 +10,6 @@ namespace DotNetEnglishP5_3.Data
             : base(options)
         {
         }
+        public DbSet<DotNetEnglishP5_3.Models.Inventory> Inventory { get; set; }
     }
 }
