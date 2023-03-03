@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnglishP5_3.Data;
 using DotNetEnglishP5_3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DotNetEnglishP5_3.Controllers
 {
+    [Authorize (Roles = "SuperAdmin,Admin")]
     public class InventoryController : Controller
     {
         private readonly ApplicationDbContext _context;
