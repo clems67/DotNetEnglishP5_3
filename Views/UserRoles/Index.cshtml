@@ -1,5 +1,5 @@
-﻿@using DotNetEnglishP5_3.Models
-@model List<DotNetEnglishP5_3.Models.UserRolesViewModel>
+﻿@using DotNetEnglishP5_3.Models;
+@model List<UserRolesViewModel>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +20,7 @@
                 <td>@user.Email</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
-                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>
+                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Manage Role</a>
                 </td>
             </tr>
         }
