@@ -1,4 +1,4 @@
-﻿using DotNetEnglishP5_3.Models;
+﻿using DotNetEnglishP5_3.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

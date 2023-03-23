@@ -1,4 +1,4 @@
-﻿namespace DotNetEnglishP5_3.Models
+﻿namespace DotNetEnglishP5_3.ViewModels
 {
     public class UserRolesViewModel
     {
