@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace DotNetEnglishP5_3.Models
+namespace DotNetEnglishP5_3.ViewModels
 {
-    public class Inventory
+    public class InventoryViewModel
     {
-        [Key]
-        //[BindNever]
-        public int Id { get; set; }
         [Required]
         [RegularExpression(@"[\d\w]{12}", ErrorMessage = "12 char code")]
         public string VIN { get; set; }
@@ -30,6 +27,6 @@ namespace DotNetEnglishP5_3.Models
         public float? SellingPrice { get; set; }
         [DataType(DataType.Date)]
         public DateTime? SaleDate { get; set; }
-        public string? Picture { get; set; }
+        public IFormFile? Picture { get; set; }
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using DotNetEnglishP5_3.Data;
 using DotNetEnglishP5_3.Models;
 using Microsoft.AspNetCore.Authorization;
+using DotNetEnglishP5_3.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DotNetEnglishP5_3.Controllers
 {
@@ -15,10 +17,12 @@ namespace DotNetEnglishP5_3.Controllers
     public class InventoryController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public InventoryController(ApplicationDbContext context)
+        public InventoryController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Inventory
@@ -56,16 +60,51 @@ namespace DotNetEnglishP5_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VIN,Year,Make,Model,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Picture")] Inventory inventory)
+        public async Task<IActionResult> Create(InventoryViewModel inventoryViewModel)
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = UploadedFile(inventoryViewModel);
+                Inventory inventory = new Inventory
+                {
+                    VIN = inventoryViewModel.VIN,
+                    Year = inventoryViewModel.Year,
+                    Make = inventoryViewModel.Make,
+                    Model = inventoryViewModel.Model,
+                    Trim = inventoryViewModel.Trim,
+                    PurchaseDate = inventoryViewModel.PurchaseDate,
+                    PurchasePrice = inventoryViewModel.PurchasePrice,
+                    Repairs = inventoryViewModel.Repairs,
+                    RepairCost = inventoryViewModel.RepairCost,
+                    LotDate = inventoryViewModel.LotDate,
+                    SellingPrice = inventoryViewModel.SellingPrice,
+                    SaleDate = inventoryViewModel.SaleDate,
+                    Picture = uniqueFileName,
+                };
                 _context.Add(inventory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(inventory);
+            return View();
         }
+
+        private string UploadedFile(InventoryViewModel inventoryViewModel)
+        {
+            string uniqueFileName = null;
+
+            if (inventoryViewModel.Picture != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + inventoryViewModel.Picture.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    inventoryViewModel.Picture.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
 
         // GET: Inventory/Edit/5
         public async Task<IActionResult> Edit(int? id)
