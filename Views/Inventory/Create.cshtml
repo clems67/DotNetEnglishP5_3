@@ -63,18 +63,19 @@
                 <span asp-validation-for="LotDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SellingPrice" class="control-label"></label>
-                <input asp-for="SellingPrice" class="form-control" />
-                <span asp-validation-for="SellingPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="SaleDate" class="control-label"></label>
                 <input asp-for="SaleDate" class="form-control" />
                 <span asp-validation-for="SaleDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
-                <div class="custom-file">
+                <br />
+                @if(Model?.Picture != null)
+                {
+                   <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="data:image/*;base64,(Model.Picture)">
+                }
+                
+                    <div class="custom-file">
                     <input asp-for="Picture" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>

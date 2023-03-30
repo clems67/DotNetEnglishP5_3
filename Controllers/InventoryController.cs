@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace DotNetEnglishP5_3.Controllers
 {
-    [Authorize (Roles = "SuperAdmin,Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class InventoryController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -77,7 +77,7 @@ namespace DotNetEnglishP5_3.Controllers
                     Repairs = inventoryViewModel.Repairs,
                     RepairCost = inventoryViewModel.RepairCost,
                     LotDate = inventoryViewModel.LotDate,
-                    SellingPrice = inventoryViewModel.SellingPrice,
+                    SellingPrice = inventoryViewModel.PurchasePrice + inventoryViewModel.RepairCost + 500,
                     SaleDate = inventoryViewModel.SaleDate,
                     Picture = uniqueFileName,
                 };

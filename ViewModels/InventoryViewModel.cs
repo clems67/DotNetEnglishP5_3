@@ -24,7 +24,6 @@ namespace DotNetEnglishP5_3.ViewModels
         public float? RepairCost { get; set; }
         [DataType(DataType.Date)]
         public DateTime? LotDate { get; set; }
-        public float? SellingPrice { get; set; }
         [DataType(DataType.Date)]
         public DateTime? SaleDate { get; set; }
         public IFormFile? Picture { get; set; }
