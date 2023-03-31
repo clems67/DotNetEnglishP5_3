@@ -203,12 +203,13 @@ namespace DotNetEnglishP5_3.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Inventory'  is null.");
             }
-            
+
             var inventory = await _context.Inventory.FindAsync(id);
             if (inventory != null)
             {
-                if (inventory.Picture!= null){
-                    DeletePicture(inventory);
+                if (inventory.Picture != null)
+                {
+                    DeletePicture(inventory.Picture);
                 }
                 _context.Inventory.Remove(inventory);
             }
@@ -216,17 +217,26 @@ namespace DotNetEnglishP5_3.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        public void DeletePicture(Inventory inventory)
+        public async Task<IActionResult> DeletePictureView(string Picture, int id)
         {
-            if (inventory.Picture != null)
+            var inventory = await _context.Inventory.FindAsync(id);
+            if (inventory != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                string filePath = Path.Combine(uploadsFolder, inventory.Picture);
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
+                inventory.Picture = null;
+                _context.Update(inventory);
+                await _context.SaveChangesAsync();
+                DeletePicture(Picture);
+            }
+            return RedirectToAction(nameof(Edit), new { id });
+        }
+
+        public void DeletePicture(string Picture)
+        {
+            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            string filePath = Path.Combine(uploadsFolder, Picture);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
             }
         }
 

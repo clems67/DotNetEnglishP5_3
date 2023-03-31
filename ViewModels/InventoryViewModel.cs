@@ -5,7 +5,6 @@ namespace DotNetEnglishP5_3.ViewModels
 {
     public class InventoryViewModel
     {
-        [BindNever]
         public int Id { get; set; }
         [Required]
         [RegularExpression(@"[\d\w]{12}", ErrorMessage = "12 char code")]
