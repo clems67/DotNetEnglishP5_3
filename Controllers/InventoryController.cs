@@ -10,6 +10,7 @@ using DotNetEnglishP5_3.Models;
 using Microsoft.AspNetCore.Authorization;
 using DotNetEnglishP5_3.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Humanizer;
 
 namespace DotNetEnglishP5_3.Controllers
 {
@@ -127,9 +128,9 @@ namespace DotNetEnglishP5_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VIN,Year,Make,Model,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Picture")] Inventory inventory)
+        public async Task<IActionResult> Edit(int id, InventoryViewModel inventoryViewModel)
         {
-            if (id != inventory.Id)
+            if (id != inventoryViewModel.Id)
             {
                 return NotFound();
             }
@@ -138,12 +139,30 @@ namespace DotNetEnglishP5_3.Controllers
             {
                 try
                 {
+                    string uniqueFileName = UploadedFile(inventoryViewModel);
+                    Inventory inventory = new Inventory
+                    {
+                        Id = inventoryViewModel.Id,
+                        VIN = inventoryViewModel.VIN,
+                        Year = inventoryViewModel.Year,
+                        Make = inventoryViewModel.Make,
+                        Model = inventoryViewModel.Model,
+                        Trim = inventoryViewModel.Trim,
+                        PurchaseDate = inventoryViewModel.PurchaseDate,
+                        PurchasePrice = inventoryViewModel.PurchasePrice,
+                        Repairs = inventoryViewModel.Repairs,
+                        RepairCost = inventoryViewModel.RepairCost,
+                        LotDate = inventoryViewModel.LotDate,
+                        SellingPrice = inventoryViewModel.PurchasePrice + inventoryViewModel.RepairCost + 500,
+                        SaleDate = inventoryViewModel.SaleDate,
+                        Picture = uniqueFileName,
+                    };
                     _context.Update(inventory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InventoryExists(inventory.Id))
+                    if (!InventoryExists(inventoryViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -154,7 +173,7 @@ namespace DotNetEnglishP5_3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(inventory);
+            return View(inventoryViewModel);
         }
 
         // GET: Inventory/Delete/5
@@ -184,14 +203,31 @@ namespace DotNetEnglishP5_3.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Inventory'  is null.");
             }
+            
             var inventory = await _context.Inventory.FindAsync(id);
             if (inventory != null)
             {
+                if (inventory.Picture!= null){
+                    DeletePicture(inventory);
+                }
                 _context.Inventory.Remove(inventory);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public void DeletePicture(Inventory inventory)
+        {
+            if (inventory.Picture != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                string filePath = Path.Combine(uploadsFolder, inventory.Picture);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
         }
 
         private bool InventoryExists(int id)
