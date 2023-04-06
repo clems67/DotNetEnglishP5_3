@@ -95,7 +95,7 @@ namespace DotNetEnglishP5_3.Controllers
 
             if (inventoryViewModel.Picture != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/inventory");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + inventoryViewModel.Picture.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -232,7 +232,7 @@ namespace DotNetEnglishP5_3.Controllers
 
         public void DeletePicture(string Picture)
         {
-            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/inventory");
             string filePath = Path.Combine(uploadsFolder, Picture);
             if (System.IO.File.Exists(filePath))
             {

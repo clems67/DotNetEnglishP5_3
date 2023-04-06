@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  display: inline-block;
+  margin-right: 20px;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.hero {
+  background-image: url(bg.jpg);
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 100px 0;
+}
+.hero h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.hero p {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+.btnViewInventory {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+    .btnViewInventory:hover {
+        background-color: #666;
+    }
+.featured-cars {
+  margin-top: 40px;
+}
+.featured-cars h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.car-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.car-card {
+  width: calc(33.33% - 20px);
+  margin-bottom: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.car-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.car-card h3 {
+  font-size: 24px;
+  margin: 20px;
+}
+.car-card p {
+  font-size: 18px;
+  margin: 20px;
+}

@@ -72,7 +72,7 @@
                 <label asp-for="Picture" class="control-label"></label>
                 @if (Model.Picture != null)
                 {
-                    <img id="profilePicture" src="~/images/@Model.Picture">
+                    <img id="profilePicture" src="~/images/inventory/@Model.Picture">
                     <button asp-controller="Inventory" asp-action="DeletePictureView" asp-route-Picture="@Model.Picture" asp-route-id="@Model.Id">Delete Image</button>
                 }
                 else

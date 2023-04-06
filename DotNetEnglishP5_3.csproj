@@ -19,7 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <None Include="wwwroot\css\home.css" />
+    <None Include="wwwroot\images\home\car1.png" />
+    <None Include="wwwroot\images\home\car2.png" />
+    <None Include="wwwroot\images\home\car3.png" />
+    <None Include="wwwroot\images\home\the_car_hub_logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\inventory\" />
   </ItemGroup>
 
 </Project>
