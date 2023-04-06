@@ -19,7 +19,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '3.1'
           include-prerelease: true
 
       - name: Build with dotnet
@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'TheCarHub404'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2260B7DB48044EFF8BEE041C93F212FD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_523EA676BD6B492093354AC285ECBAB7 }}
           package: .
