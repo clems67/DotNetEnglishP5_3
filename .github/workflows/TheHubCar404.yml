@@ -1,17 +1,17 @@
-name: Build and deploy .NET Core application to Web App TheCarHub404
+name: Build and deploy .NET Core application to Web App TheHubCar404
 on:
   push:
     branches:
     - master
 env:
-  AZURE_WEBAPP_NAME: TheCarHub404
-  AZURE_WEBAPP_PACKAGE_PATH: .\published
+  AZURE_WEBAPP_NAME: TheHubCar404
+  AZURE_WEBAPP_PACKAGE_PATH: ./published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: .
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -32,7 +32,7 @@ jobs:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     steps:
     - name: Download artifact from build job
@@ -44,5 +44,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.TheCarHub404_672D }}
+        publish-profile: ${{ secrets.TheHubCar404_4C35 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
