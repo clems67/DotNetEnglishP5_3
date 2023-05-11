@@ -7,7 +7,7 @@ using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-string connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING_sql_database_connection");
+string connectionString = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
