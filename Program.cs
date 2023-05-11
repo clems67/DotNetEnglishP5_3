@@ -7,7 +7,7 @@ using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING_sql_database_connection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -41,7 +41,7 @@ using(var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
     string email = "admin@admin.com";
-    string password = "Test1234,";
+    string password = "Test1234&,";
 
     if(await userManager.FindByEmailAsync(email) == null)
     {
@@ -55,7 +55,7 @@ using(var scope = app.Services.CreateScope())
     }
 
     email = "caravita.clement@gmail.com";
-    password = "Test1234,";
+    password = "Test1234&,";
 
     if (await userManager.FindByEmailAsync(email) == null)
     {
