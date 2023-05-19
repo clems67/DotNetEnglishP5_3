@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DotNetEnglishP5_3.Controllers
 {
-    [Authorize]
     public class AvailableCarsController : Controller
     {
         private readonly ApplicationDbContext _context;
