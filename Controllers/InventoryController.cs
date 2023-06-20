@@ -35,18 +35,25 @@ namespace DotNetEnglishP5_3.Controllers
         // GET: Inventory/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Inventory == null)
+            Inventory inventory = new Inventory();
+            try
             {
-                return NotFound();
-            }
+                if (id == null || _context.Inventory == null)
+                {
+                    return NotFound();
+                }
 
-            var inventory = await _context.Inventory
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (inventory == null)
+                inventory = await _context.Inventory
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (inventory == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception e)
             {
-                return NotFound();
-            }
-
+                Console.WriteLine("InventoryController Create :", e);
+            };
             return View(inventory);
         }
 
@@ -63,45 +70,60 @@ namespace DotNetEnglishP5_3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(InventoryViewModel inventoryViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string uniqueFileName = UploadedFile(inventoryViewModel);
-                Inventory inventory = new Inventory
+                if (ModelState.IsValid)
                 {
-                    VIN = inventoryViewModel.VIN,
-                    Year = inventoryViewModel.Year,
-                    Make = inventoryViewModel.Make,
-                    Model = inventoryViewModel.Model,
-                    Trim = inventoryViewModel.Trim,
-                    PurchaseDate = inventoryViewModel.PurchaseDate,
-                    PurchasePrice = inventoryViewModel.PurchasePrice,
-                    Repairs = inventoryViewModel.Repairs,
-                    RepairCost = inventoryViewModel.RepairCost,
-                    LotDate = inventoryViewModel.LotDate,
-                    SellingPrice = inventoryViewModel.PurchasePrice + inventoryViewModel.RepairCost + 500,
-                    SaleDate = inventoryViewModel.SaleDate,
-                    Picture = uniqueFileName,
-                };
-                _context.Add(inventory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    string uniqueFileName = UploadedFile(inventoryViewModel);
+                    Inventory inventory = new Inventory
+                    {
+                        VIN = inventoryViewModel.VIN,
+                        Year = inventoryViewModel.Year,
+                        Make = inventoryViewModel.Make,
+                        Model = inventoryViewModel.Model,
+                        Trim = inventoryViewModel.Trim,
+                        PurchaseDate = inventoryViewModel.PurchaseDate,
+                        PurchasePrice = inventoryViewModel.PurchasePrice,
+                        Repairs = inventoryViewModel.Repairs,
+                        RepairCost = inventoryViewModel.RepairCost,
+                        LotDate = inventoryViewModel.LotDate,
+                        SellingPrice = inventoryViewModel.PurchasePrice + inventoryViewModel.RepairCost + 500,
+                        SaleDate = inventoryViewModel.SaleDate,
+                        Picture = uniqueFileName,
+                    };
+                    _context.Add(inventory);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("InventoryController Create :", e);
+            };
             return View();
         }
 
         private string UploadedFile(InventoryViewModel inventoryViewModel)
         {
             string uniqueFileName = null;
-
-            if (inventoryViewModel.Picture != null)
+            try
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/inventory");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + inventoryViewModel.Picture.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+
+
+                if (inventoryViewModel.Picture != null)
                 {
-                    inventoryViewModel.Picture.CopyTo(fileStream);
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/inventory");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + inventoryViewModel.Picture.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        inventoryViewModel.Picture.CopyTo(fileStream);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("InventoryController UploadedFile :", e);
             }
             return uniqueFileName;
         }
@@ -168,7 +190,7 @@ namespace DotNetEnglishP5_3.Controllers
                     }
                     else
                     {
-                        throw;
+                        Console.WriteLine("InventoryController POST Edit");
                     }
                 }
                 return RedirectToAction(nameof(Index));
