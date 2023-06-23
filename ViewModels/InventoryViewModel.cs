@@ -10,6 +10,7 @@ namespace DotNetEnglishP5_3.ViewModels
         [RegularExpression(@"[\d\w]{12}", ErrorMessage = "12 char code")]
         public string VIN { get; set; }
         [Required]
+        [Range(1990, 2100, ErrorMessage = "Year must not be older than {1}")]
         public int Year { get; set; }
         [Required]
         public string Make { get; set; }
