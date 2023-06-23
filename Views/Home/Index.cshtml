@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<DotNetEnglishP5_3.Models.Inventory>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -15,30 +17,34 @@
         <section class="hero">
             <h2>Upgrade your ride without breaking the bank!</h2>
             <p>Welcome to The Car Hub, your local used car dealership. We offer a wide selection of quality pre-owned vehicles at affordable prices. Contact us today to schedule a test drive.</p>
-            <a asp-controller="AvailableCars" asp-action="Index" class="btnViewInventory">View Inventory</a>
         </section>
         <section class="featured-cars">
-            <h2>Featured Cars</h2>
+            <h2>Available Cars :</h2>
             <div class="car-list">
-                <div class="car-card">
-                    <img src="~/images/home/car1.png" alt="Car 1">
-                    <h3>2015 Toyota Camry</h3>
-                    <p>$12,500</p>
-                </div>
-                <div class="car-card">
-                    <img src="/images/home/car2.png" alt="Car 2">
-                    <h3>2016 Honda Civic</h3>
-                    <p>$14,000</p>
-                </div>
-                <div class="car-card">
-                    <img src="~/images/home/car3.png" alt="Car 3">
-                    <h3>2014 Nissan Altima</h3>
-                    <p>$10,500</p>
-                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="car-card" onclick="window.location='@Url.Action("Details")/@item.Id'">
+                        <h3>
+                            @if (item.Picture != null)
+                            {
+                                <img id="profilePicture" src="~/images/inventory/@item.Picture">
+                            }
+                            else
+                            {
+                                <img id="profilePicture" src="~/images/home/default_image_car.jpg">
+                            }
+                            @Html.DisplayFor(modelItem => item.Year)
+                            @Html.DisplayFor(modelItem => item.Make)
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </h3>
+                        <p>$ @Html.DisplayFor(modelItem => item.PurchasePrice)</p>
+                  
+                    </div>
+                }
             </div>
         </section>
     </main>
 
-    ,
+
 </body>
 </html>

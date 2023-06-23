@@ -67,11 +67,12 @@ main {
   justify-content: space-between;
 }
 .car-card {
-  width: calc(33.33% - 20px);
-  margin-bottom: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  overflow: hidden;
+    width: calc(33.33% - 20px);
+    margin-bottom: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
 }
 .car-card img {
   width: 100%;
